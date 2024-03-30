@@ -6,7 +6,7 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:29 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/29 21:59:55 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/30 23:09:41 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	mandelbrot(t_fractol *frct)
 			data->yp = ((double)data->y / frct->height - frct->shift_y)
 				* frct->scale;
 			i = itermandelbrot(data);
-			col = (i * 255) / ITER_LIM;
+			col = get_rgba(i * 255 / ITER_LIM / 7, i * 255 / ITER_LIM / 3,
+					i * 255 / ITER_LIM, 255);
 			mlx_put_pixel(frct->img, data->x, data->y, col);
 		}
 		data->y += 1;

@@ -6,7 +6,7 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:31:57 by julian            #+#    #+#             */
-/*   Updated: 2024/03/30 15:35:55 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/30 23:14:44 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	burningship(t_fractol *frct)
 			data->yp = ((double)data->y / (frct->height / (frct->height
 							/ frct->width)) - frct->shift_y) * frct->scale;
 			i = iterburningship(frct, data);
-			col = (i * 255 / ITER_LIM);
+			col = get_rgba(i * 255 / ITER_LIM + 5, i * 255 / ITER_LIM / 2 + 5, i * 255 / ITER_LIM / 15, 255);
 			mlx_put_pixel(frct->img, data->x, data->y, col);
 			data->x += 1;
 		}

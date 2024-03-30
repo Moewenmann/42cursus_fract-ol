@@ -6,7 +6,7 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:23 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/29 21:59:23 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/30 23:12:26 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	julia(t_fractol *frct)
 			data->yp = ((double)data->y / (frct->height / (frct->height
 							/ frct->width)) - frct->shift_y) * frct->scale;
 			i = iterjulia(frct, data);
-			col = (i * 255 / ITER_LIM);
+			col = get_rgba(i * 255 / ITER_LIM / 2, i * 255 / ITER_LIM, i * 255 / ITER_LIM / 5, 255);
 			mlx_put_pixel(frct->img, data->x, data->y, col);
 			data->x += 1;
 		}

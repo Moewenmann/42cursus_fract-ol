@@ -6,7 +6,7 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:17:33 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/30 16:00:35 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/30 22:42:37 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	burningship(t_fractol *frct);
 void	keyaction(mlx_key_data_t keydata, void *params);
 void	mouseaction(double a, double b, void *params);
 void	resizeaction(int width, int height, void *params);
+void	quitaction(void *params);
 
 int		eval_params(t_fractol *frct, int argc, char **argv);
 int		get_rgba(int red, int green, int blue, int alpha);

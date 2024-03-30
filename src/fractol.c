@@ -6,7 +6,7 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:17:36 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/30 16:07:27 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/30 22:47:58 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int argc, char **argv)
 			frct_quit(frct, FQ_ERR), 1);
 	init(frct, argc, argv);
 	mlx_loop(frct->mlx);
-	mlx_terminate(frct->mlx);
 	frct_quit (frct, FQ_OK);
 	return (0);
 }
@@ -59,6 +58,7 @@ static void	init(t_fractol *frct, int argc, char **argv)
 	mlx_resize_hook(frct->mlx, resizeaction, frct);
 	mlx_key_hook(frct->mlx, keyaction, frct);
 	mlx_scroll_hook(frct->mlx, mouseaction, frct);
+	mlx_close_hook(frct->mlx, quitaction, frct);
 	if (frct->fractal_type == 1)
 		mandelbrot_p(frct, argc, argv);
 	else if (frct->fractal_type == 2)
@@ -69,14 +69,10 @@ static void	init(t_fractol *frct, int argc, char **argv)
 
 void	frct_quit(t_fractol *frct, const int is_err)
 {
+	mlx_terminate(frct->mlx);
+	free(frct);
 	if (is_err)
-	{
-		free(frct);
 		exit(1);
-	}
 	else
-	{
-		free(frct);
 		exit(0);
-	}
 }
