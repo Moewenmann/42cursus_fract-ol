@@ -6,7 +6,7 @@
 #    By: julian <julian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/15 17:43:53 by jmuhlber          #+#    #+#              #
-#    Updated: 2024/03/30 17:23:50 by julian           ###   ########.fr        #
+#    Updated: 2024/04/01 02:42:24 by julian           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,20 +35,23 @@ OBJ = $(SOURCE:.c=.o)
 
 COMPILER = cc
 
+LIBFT_GIT = git@github.com:Moewenmann/42cursus_Libft.git
+MLX_GIT = https://github.com/codam-coding-college/MLX42.git
+
 
 all: libmlx libft $(NAME)
 
 libft:
 	@if [ ! -d $(LIBFTDIR) ]; then \
 		echo "LIBFTDIR not found! - Cloning libf from github."; \
-		git clone git@github.com:Moewenmann/42cursus_Libft.git $(LIBFTDIR); \
+		git clone $(LIBFT_GIT) $(LIBFTDIR); \
 	fi
 	@make -C $(LIBFTDIR)
 
 libmlx:
 	@if [ ! -d $(MLXDIR) ]; then \
 		echo "MLXDIR not found! - Cloning mlx from github."; \
-		git clone https://github.com/codam-coding-college/MLX42.git $(MLXDIR); \
+		git clone $(MLX_GIT) $(MLXDIR); \
 	fi
 	@cmake $(MLXDIR) -B $(MLXDIR)/build && make -C $(MLXDIR)/build -j4
 
@@ -84,12 +87,12 @@ re: fclean all
 install:
 	@brew install glfw
 	@if [ ! -d $(MLXDIR) ]; then \
-		git clone https://github.com/codam-coding-college/MLX42.git $(MLXDIR); \
+		git clone $(MLX_GIT) $(MLXDIR); \
 	else \
 		echo "MLX is already installed. Run make rmlib to remove libs."; \
 	fi
 	@if [ ! -d $(LIBFTDIR) ]; then \
-		git clone git@github.com:Moewenmann/42cursus_Libft.git $(LIBFTDIR); \
+		git clone $(LIBFT_GIT) $(LIBFTDIR); \
 	else \
 		echo "libft is already installed. Run make rmlib to remove libs."; \
 	fi

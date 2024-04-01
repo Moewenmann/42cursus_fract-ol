@@ -6,13 +6,14 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:23 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/30 23:12:26 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/31 22:39:38 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 static int	iterjulia(t_fractol *frct, t_calc_data *data);
+static int	color_julia(t_fcol *c, int i);
 
 void	julia_p(t_fractol *frct, int argc, char **argv)
 {
@@ -30,10 +31,12 @@ void	julia_p(t_fractol *frct, int argc, char **argv)
 void	julia(t_fractol *frct)
 {
 	t_calc_data	*data;
+	t_fcol		*col;
 	int			i;
-	int			col;
 
-	data = malloc(sizeof(t_calc_data));
+	if (!(data = malloc(sizeof(t_calc_data)))
+		|| !(col = malloc(sizeof(t_fcol))))
+		return (ft_printf("%s\n", MEM_FAIL), frct_quit(frct, FQ_ERR));
 	data->y = 0;
 	while (data->y < frct->height)
 	{
@@ -45,13 +48,12 @@ void	julia(t_fractol *frct)
 			data->yp = ((double)data->y / (frct->height / (frct->height
 							/ frct->width)) - frct->shift_y) * frct->scale;
 			i = iterjulia(frct, data);
-			col = get_rgba(i * 255 / ITER_LIM / 2, i * 255 / ITER_LIM, i * 255 / ITER_LIM / 5, 255);
-			mlx_put_pixel(frct->img, data->x, data->y, col);
+			mlx_put_pixel(frct->img, data->x, data->y, color_julia(col, i));
 			data->x += 1;
 		}
 		data->y += 1;
 	}
-	free(data);
+	return (free(data), free(col));
 }
 
 static int	iterjulia(t_fractol *frct, t_calc_data *data)
@@ -73,3 +75,46 @@ static int	iterjulia(t_fractol *frct, t_calc_data *data)
 	}
 	return (i);
 }
+
+static int	color_julia(t_fcol *c, int i)
+{
+	double	theta;
+
+	if (i > (ITER_LIM - 40))
+	{
+		theta = (i - 4) * M_PI / 11.0;
+		c->red = (int)(128.0 + 124.0 * sin(theta + 2.0 * M_PI / 4.0));
+		c->green = (int)(128.0 + 127.0 * sin(theta));
+		c->blue = (int)(128.0 + 124.0 * sin(theta + 4.0 * M_PI / 3.0));
+		return (get_rgba(c->red, c->green, c->blue, 255));
+	}
+	else if (i > (ITER_LIM - 30))
+	{
+		c->shade = i * 255 / ITER_LIM;
+		return (get_rgba(c->shade, c->shade, c->shade, 255));
+	}
+	else
+	{
+		c->shade = i + 10 * 255 / ITER_LIM;
+		return (get_rgba(c->shade, c->shade, c->shade, 255));
+	}
+}
+
+
+/* static int	create_color_julia(t_fcol *c, int i)
+{
+	if (i > (ITER_LIM - 40)) {
+		double theta = (i - 4) * M_PI / 11.0;
+		int red = (int)(128.0 + 124.0 * sin(theta + 2.0 * M_PI / 4.0));
+		int green = (int)(128.0 + 127.0 * sin(theta));
+		int blue = (int)(128.0 + 124.0 * sin(theta + 4.0 * M_PI / 3.0));
+		return (get_rgba(red, green, blue, 255));
+	}
+	else if (i > (ITER_LIM - 30)) {
+		int shade = i * 255 / ITER_LIM;
+		return (get_rgba(shade, shade, shade, 255));
+	} else {
+		int shade = i + 10 * 255 / ITER_LIM;
+		return (get_rgba(shade, shade, shade, 255));
+	}
+} */

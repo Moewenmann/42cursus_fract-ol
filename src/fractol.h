@@ -6,7 +6,7 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:17:33 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/30 22:42:37 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/31 11:14:57 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ typedef struct s_calc_data
 	double			xpyp;
 }				t_calc_data;
 
-typedef struct s_frct_rgba
+typedef struct s_fcol
 {
 	int				red;
 	int				green;
 	int				blue;
-	int				alpha;
-}				t_frct_rgba;
+	int				shade;
+}				t_fcol;
 
 # ifndef MSG_USAGE
 #  define MSG_USAGE "[mandelbrot | julia] <rendering options>"

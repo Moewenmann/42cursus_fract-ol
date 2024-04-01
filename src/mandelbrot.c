@@ -6,13 +6,14 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:29 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/30 23:09:41 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/31 14:14:26 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static int	itermandelbrot(t_calc_data *data);
+static int	itermandelbrot(t_fractol *frct, t_calc_data *data);
+static int	color_mandel(t_fcol *c, int i);
 
 void	mandelbrot_p(t_fractol *frct, int argc, char **argv)
 {
@@ -21,18 +22,23 @@ void	mandelbrot_p(t_fractol *frct, int argc, char **argv)
 	frct->shift_x = 0.73;
 	frct->shift_y = 0.5;
 	if (argc == 2)
-		return (mandelbrot(frct));
-	else
+		return (frct->param1 = 0, frct->param2 = 0, mandelbrot(frct));
+	eval_params(frct, argc, argv);
+	if (argc == 3)
+		return (frct->param2 = 0, mandelbrot(frct));
+	if (argc == 4)
 		return (mandelbrot(frct));
 }
 
 void	mandelbrot(t_fractol *frct)
 {
 	t_calc_data	*data;
+	t_fcol		*col;
 	int			i;
-	int			col;
 
-	data = malloc(sizeof(t_calc_data));
+	if (!(data = malloc(sizeof(t_calc_data)))
+		|| !(col = malloc(sizeof(t_fcol))))
+		return (ft_printf("%s\n", MEM_FAIL), frct_quit(frct, FQ_ERR));
 	data->y = 0;
 	while (data->y < frct->height)
 	{
@@ -44,17 +50,15 @@ void	mandelbrot(t_fractol *frct)
 				* frct->scale;
 			data->yp = ((double)data->y / frct->height - frct->shift_y)
 				* frct->scale;
-			i = itermandelbrot(data);
-			col = get_rgba(i * 255 / ITER_LIM / 7, i * 255 / ITER_LIM / 3,
-					i * 255 / ITER_LIM, 255);
-			mlx_put_pixel(frct->img, data->x, data->y, col);
+			i = itermandelbrot(frct, data);
+			mlx_put_pixel(frct->img, data->x, data->y, color_mandel(col, i));
 		}
 		data->y += 1;
 	}
-	free(data);
+	return (free(data), free(col));
 }
 
-static int	itermandelbrot(t_calc_data *data)
+static int	itermandelbrot(t_fractol *frct, t_calc_data *data)
 {
 	int	i;
 
@@ -67,11 +71,35 @@ static int	itermandelbrot(t_calc_data *data)
 		data->square_y = data->yp * data->yp;
 		data->xpyp = data->xp * data->yp * 2;
 		data->square_xy = data->square_x - data->square_y;
-		data->xp = data->square_xy + data->xc;
-		data->yp = data->xpyp + data->yc;
+		data->xp = data->square_xy + data->xc + frct->param1;
+		data->yp = data->xpyp + data->yc + frct->param2;
 		if (data->square_x + data->square_y > 8)
 			return (i);
 		i += 1;
 	}
 	return (i);
+}
+
+static int	color_mandel(t_fcol *c, int i)
+{
+	double	theta;
+
+	if (i > (ITER_LIM - 40))
+	{
+		theta = (i - 4) * M_PI / 10.0;
+		c->red = (int)(128.0 + 124.0 * sin(theta + 3.0 * M_PI / 31.0));
+		c->green = (int)(128.0 + 124.0 * sin(theta + 4.0 * M_PI / 14.0));
+		c->blue = (int)(128.0 + 124 * sin(theta + 4.0 * M_PI / 3.0));
+		return (get_rgba(c->red, c->green, c->blue, 255));
+	}
+	else if (i > (ITER_LIM - 30))
+	{
+		c->shade = i * 255 / ITER_LIM;
+		return (get_rgba(c->shade, c->shade, c->shade, 255));
+	}
+	else
+	{
+		c->shade = (i + 10) * 255 / ITER_LIM;
+		return (get_rgba(c->shade, c->shade, c->shade, 255));
+	}
 }

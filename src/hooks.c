@@ -6,7 +6,7 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:27 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/30 22:42:15 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/31 06:38:57 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	mouseaction(double a, double b, void *params)
 	(void)a;
 	frct = (t_fractol *)params;
 	mlx_get_mouse_pos(frct->mlx, &mx, &my);
+	mlx_set_mouse_pos(frct->mlx, mx, my);
 	if (b > 0)
 		f = 0.8;
 	else
@@ -63,23 +64,17 @@ void	resizeaction(int a, int b, void *params)
 {
 	t_fractol	*frct;
 	double		ratio;
-	double		new_ratio;
+	double		img_ratio;
 
 	frct = (t_fractol *)params;
 	frct->width = a;
 	frct->height = b;
-	ratio = (double)frct->width / (double)frct->height;
-	new_ratio = (double)a / (double)b;
-	if (ratio < new_ratio)
-	{
-		frct->width = a;
-		frct->height = a / ratio;
-	}
+	img_ratio = (double)frct->width / (double)frct->height;
+	ratio = (double)a / (double)b;
+	if (ratio > img_ratio)
+		frct->width = b * img_ratio;
 	else
-	{
-		frct->width = b * ratio;
-		frct->height = b;
-	}
+		frct->height = a / img_ratio;
 	mlx_resize_image(frct->img, frct->width, frct->height);
 	runfrct(frct);
 }

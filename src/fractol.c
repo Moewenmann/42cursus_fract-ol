@@ -6,7 +6,7 @@
 /*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:17:36 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/30 22:47:58 by julian           ###   ########.fr       */
+/*   Updated: 2024/03/31 10:06:11 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,10 @@ static void	init(t_fractol *frct, int argc, char **argv)
 		frct->mlx = mlx_init(frct->width, frct->height, TITLE_JULIA, true);
 	else if (frct->fractal_type == 3)
 		frct->mlx = mlx_init(frct->width, frct->height, TITLE_BRNSHIP, true);
-	else
-		return (ft_printf("%s\n", MLX_FAIL), frct_quit(frct, FQ_ERR));
 	if (!frct->mlx)
 		return (ft_printf("%s\n", MLX_FAIL), frct_quit(frct, FQ_ERR));
-	frct->img = mlx_new_image(frct->mlx, frct->width, frct->height);
+	if (!(frct->img = mlx_new_image(frct->mlx, frct->width, frct->height)))
+		return (ft_printf("%s\n", MLX_FAIL), frct_quit(frct, FQ_ERR));
 	mlx_image_to_window(frct->mlx, frct->img, 0, 0);
 	mlx_resize_hook(frct->mlx, resizeaction, frct);
 	mlx_key_hook(frct->mlx, keyaction, frct);
@@ -69,7 +68,8 @@ static void	init(t_fractol *frct, int argc, char **argv)
 
 void	frct_quit(t_fractol *frct, const int is_err)
 {
-	mlx_terminate(frct->mlx);
+	if (frct->mlx)
+		mlx_terminate(frct->mlx);
 	free(frct);
 	if (is_err)
 		exit(1);
