@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:17:36 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/31 10:06:11 by julian           ###   ########.fr       */
+/*   Updated: 2024/04/02 13:12:10 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static void	init(t_fractol *frct, int argc, char **argv)
 		frct->mlx = mlx_init(frct->width, frct->height, TITLE_BRNSHIP, true);
 	if (!frct->mlx)
 		return (ft_printf("%s\n", MLX_FAIL), frct_quit(frct, FQ_ERR));
-	if (!(frct->img = mlx_new_image(frct->mlx, frct->width, frct->height)))
+	frct->img = mlx_new_image(frct->mlx, frct->width, frct->height);
+	if (!frct->img)
 		return (ft_printf("%s\n", MLX_FAIL), frct_quit(frct, FQ_ERR));
 	mlx_image_to_window(frct->mlx, frct->img, 0, 0);
 	mlx_resize_hook(frct->mlx, resizeaction, frct);

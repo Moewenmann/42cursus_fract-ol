@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:29 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/31 14:14:26 by julian           ###   ########.fr       */
+/*   Updated: 2024/04/02 13:13:51 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ void	mandelbrot(t_fractol *frct)
 	t_fcol		*col;
 	int			i;
 
-	if (!(data = malloc(sizeof(t_calc_data)))
-		|| !(col = malloc(sizeof(t_fcol))))
+	data = malloc(sizeof(t_calc_data));
+	col = malloc(sizeof(t_fcol));
+	if (!data || !col)
 		return (ft_printf("%s\n", MEM_FAIL), frct_quit(frct, FQ_ERR));
 	data->y = 0;
 	while (data->y < frct->height)

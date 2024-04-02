@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:31 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/30 16:07:19 by julian           ###   ########.fr       */
+/*   Updated: 2024/04/02 13:19:43 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+static double	ft_atof(const char *str);
+static int		ft_is_space(const char *str);
+static double	atof_parse_number(const char *str, double *f, int *d);
 
 int	get_rgba(int red, int green, int blue, int alpha)
 {
@@ -45,17 +49,7 @@ int	eval_params(t_fractol *frct, int argc, char **argv)
 	return (1);
 }
 
-static int	ft_check_space(const char *str)
-{
-	if (*str == ' ' || *str == '\t'
-		|| *str == '\r' || *str == '\n'
-		|| *str == '\f' || *str == '\v')
-		return (1);
-	else
-		return (0);
-}
-
-double	ft_atof(const char *str)
+static double	ft_atof(const char *str)
 {
 	double	res;
 	double	fraction;
@@ -66,7 +60,7 @@ double	ft_atof(const char *str)
 	fraction = 0.0;
 	prefix = 1;
 	decimals = 1;
-	while (ft_check_space(str))
+	while (ft_is_space(str))
 		str++;
 	if (*str == '-' || *str == '+')
 	{
@@ -74,22 +68,41 @@ double	ft_atof(const char *str)
 			prefix = -1;
 		str++;
 	}
+	res = atof_parse_number(str, &fraction, &decimals);
+	return ((res + fraction / decimals) * prefix);
+}
+
+static int	ft_is_space(const char *str)
+{
+	if (*str == ' ' || *str == '\t'
+		|| *str == '\r' || *str == '\n'
+		|| *str == '\f' || *str == '\v')
+		return (1);
+	else
+		return (0);
+}
+
+static double	atof_parse_number(const char *str, double *f, int *d)
+{
+	double	res;
+
+	res = 0.0;
 	while (ft_isdigit(*str) || *str == '.')
 	{
 		if (*str == '.')
 		{
-			decimals = 1;
+			*d = 1;
 			str++;
 			continue ;
 		}
-		if (!decimals)
+		if (!(*d))
 			res = (res * 10) + (*str - '0');
 		else
 		{
-			fraction = (fraction * 10) + (*str - '0');
-			decimals *= 10;
+			*f = (*f * 10) + (*str - '0');
+			*d *= 10;
 		}
 		str++;
 	}
-	return ((res + fraction / decimals) * prefix);
+	return (res);
 }

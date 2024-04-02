@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:17:33 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/31 11:14:57 by julian           ###   ########.fr       */
+/*   Updated: 2024/04/02 13:25:24 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_fcol
 # endif
 
 # ifndef MSG_PARAM
-#  define MSG_PARAM "Wrong parameter type! Only numbers or specific keywords are allowed."
+#  define MSG_PARAM "Wrong parameter type! Only numbers are allowed."
 # endif
 
 # ifndef TITLE_MANDELBROT
@@ -124,7 +124,6 @@ void	quitaction(void *params);
 
 int		eval_params(t_fractol *frct, int argc, char **argv);
 int		get_rgba(int red, int green, int blue, int alpha);
-void	frct_quit(t_fractol *frct, const int is_err);;
-double	ft_atof(const char *s);
+void	frct_quit(t_fractol *frct, const int is_err);
 
 #endif
