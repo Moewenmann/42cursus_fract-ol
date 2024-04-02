@@ -6,7 +6,7 @@
 /*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:31:57 by julian            #+#    #+#             */
-/*   Updated: 2024/04/02 13:26:12 by jmuhlber         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:41:35 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	burningship_p(t_fractol *frct, int argc, char **argv)
 {
 	frct->shift_x = 0.5;
 	frct->shift_y = 0.5;
+	frct->scale += 1.0;
 	if (argc == 2)
 		return (frct->param1 = -1.8, frct->param2 = -0.08, burningship(frct));
 	eval_params(frct, argc, argv);
@@ -92,16 +93,16 @@ static int	color_brnshp(t_fcol *c, int i)
 		c->blue = (int)(64.0 + 64.0 * sin(theta + 4.0 * M_PI / 3.0));
 		return (get_rgba(c->red, c->green, c->blue, 255));
 	}
-	else if (i > (ITER_LIM - 91))
+	else if (i > (ITER_LIM - 89))
 		return (c->shade = ((i + 4) * 255 / ITER_LIM),
 			get_rgba(c->shade, c->shade, c->shade, 255));
-	else if (i > (ITER_LIM - 93))
+	else if (i > (ITER_LIM - 85))
 		return (c->shade = ((i + 7) * 255 / ITER_LIM),
 			get_rgba(c->shade, c->shade, c->shade, 255));
-	else if (i > (ITER_LIM - 95))
+	else if (i > (ITER_LIM - 81))
 		return (c->shade = ((i + 9) * 255 / ITER_LIM),
 			get_rgba(c->shade, c->shade, c->shade, 255));
-	else if (i > (ITER_LIM - 97))
+	else if (i > (ITER_LIM - 76))
 		return (c->shade = ((i + 11) * 255 / ITER_LIM),
 			get_rgba(c->shade, c->shade, c->shade, 255));
 	else

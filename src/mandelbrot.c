@@ -6,7 +6,7 @@
 /*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:29 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/04/02 13:13:51 by jmuhlber         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:38:34 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	itermandelbrot(t_fractol *frct, t_calc_data *data)
 		data->square_xy = data->square_x - data->square_y;
 		data->xp = data->square_xy + data->xc + frct->param1;
 		data->yp = data->xpyp + data->yc + frct->param2;
-		if (data->square_x + data->square_y > 8)
+		if (data->square_x + data->square_y > 10)
 			return (i);
 		i += 1;
 	}
@@ -85,7 +85,7 @@ static int	color_mandel(t_fcol *c, int i)
 {
 	double	theta;
 
-	if (i > (ITER_LIM - 40))
+	if (i > (ITER_LIM - 90))
 	{
 		theta = (i - 4) * M_PI / 10.0;
 		c->red = (int)(128.0 + 124.0 * sin(theta + 3.0 * M_PI / 31.0));
@@ -93,7 +93,7 @@ static int	color_mandel(t_fcol *c, int i)
 		c->blue = (int)(128.0 + 124 * sin(theta + 4.0 * M_PI / 3.0));
 		return (get_rgba(c->red, c->green, c->blue, 255));
 	}
-	else if (i > (ITER_LIM - 30))
+	else if (i > (ITER_LIM - 89))
 	{
 		c->shade = i * 255 / ITER_LIM;
 		return (get_rgba(c->shade, c->shade, c->shade, 255));

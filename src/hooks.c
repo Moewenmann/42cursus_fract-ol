@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:27 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/03/31 06:38:57 by julian           ###   ########.fr       */
+/*   Updated: 2024/04/02 14:15:44 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ void	keyaction(mlx_key_data_t keydata, void *params)
 	t_fractol	*frct;
 
 	frct = (t_fractol *)params;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	if (keydata.key == MLX_KEY_ESCAPE)
 		frct_quit(frct, FQ_OK);
-	else if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W)
 		return (frct->shift_y -= 0.05, runfrct(frct));
-	else if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S)
 		return (frct->shift_y += 0.05, runfrct(frct));
-	else if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A)
 		return (frct->shift_x -= 0.05, runfrct(frct));
-	else if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
 		return (frct->shift_x += 0.05, runfrct(frct));
-	else if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-		return (frct->scale *= 1.2, runfrct(frct));
-	else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+	else if (keydata.key == MLX_KEY_KP_ADD)
 		return (frct->scale *= 0.8, runfrct(frct));
+	else if (keydata.key == MLX_KEY_KP_SUBTRACT)
+		return (frct->scale *= 1.2, runfrct(frct));
 	else
 		return ;
 }
@@ -55,8 +55,8 @@ void	mouseaction(double a, double b, void *params)
 		f = 1.2;
 	frct->scale *= f;
 	delta = 4.0 * (f - 1) / frct->scale;
-	frct->shift_x += (mx - frct->width / 2) * delta / frct->width;
-	frct->shift_y += (my - frct->height / 2) * delta / frct->height;
+	frct->shift_x += ((double)mx - frct->width / 1.95) * delta / frct->width;
+	frct->shift_y += ((double)my - frct->height / 1.95) * delta / frct->height;
 	runfrct(frct);
 }
 
