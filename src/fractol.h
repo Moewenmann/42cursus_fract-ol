@@ -6,12 +6,15 @@
 /*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:17:33 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/04/02 13:25:24 by jmuhlber         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:47:45 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
+
+//_--------------------------------------------------------------------------_//
+// ** ---------------------------- LIBRARIES ---------------------------- ** //
 
 # include <math.h>
 # include <stdlib.h>
@@ -19,6 +22,9 @@
 
 # include "../lib/libft/libft.h"
 # include "../lib/mlx/include/MLX42/MLX42.h"
+
+//_--------------------------------------------------------------------------_//
+// ** ----------------------------- STRUCTS ----------------------------- ** //
 
 typedef struct s_fractol
 {
@@ -56,8 +62,11 @@ typedef struct s_fcol
 	int				shade;
 }				t_fcol;
 
+//_--------------------------------------------------------------------------_//
+// ** ----------------------------- MESSAGES ---------------------------- ** //
+
 # ifndef MSG_USAGE
-#  define MSG_USAGE "[mandelbrot | julia] <rendering options>"
+#  define MSG_USAGE "[mandelbrot | julia | burningship] <parameters>"
 # endif
 
 # ifndef MLX_FAIL
@@ -69,7 +78,7 @@ typedef struct s_fcol
 # endif
 
 # ifndef MSG_PARAM
-#  define MSG_PARAM "Wrong parameter type! Only numbers are allowed."
+#  define MSG_PARAM "Wrong parameter type or format! Only numbers are allowed."
 # endif
 
 # ifndef TITLE_MANDELBROT
@@ -84,8 +93,15 @@ typedef struct s_fcol
 #  define TITLE_BRNSHIP "42 Fract'ol - Burning Ship"
 # endif
 
+//_--------------------------------------------------------------------------_//
+// ** ------------------------- STANDART VALUES ------------------------- ** //
+
 # ifndef FQ_ERR
 #  define FQ_ERR 1
+# endif
+
+# ifndef FQ_ERR_I
+#  define FQ_ERR_I 2
 # endif
 
 # ifndef FQ_OK
@@ -108,6 +124,9 @@ typedef struct s_fcol
 #  define ITER_LIM 100
 # endif
 
+//_--------------------------------------------------------------------------_//
+// ** ------------------------ FRACTOL FUNCTIONS ------------------------ ** //
+
 void	mandelbrot_p(t_fractol *frct, int argc, char **argv);
 void	mandelbrot(t_fractol *frct);
 
@@ -117,13 +136,15 @@ void	julia(t_fractol *frct);
 void	burningship_p(t_fractol *frct, int argc, char **argv);
 void	burningship(t_fractol *frct);
 
+// Hooks
 void	keyaction(mlx_key_data_t keydata, void *params);
 void	mouseaction(double a, double b, void *params);
 void	resizeaction(int width, int height, void *params);
 void	quitaction(void *params);
 
+// Utils
 int		eval_params(t_fractol *frct, int argc, char **argv);
 int		get_rgba(int red, int green, int blue, int alpha);
-void	frct_quit(t_fractol *frct, const int is_err);
+void	frct_quit(t_fractol *frct, const int8_t is_err);
 
 #endif

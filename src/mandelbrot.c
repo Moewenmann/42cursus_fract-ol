@@ -6,7 +6,7 @@
 /*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:29 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/04/02 13:38:34 by jmuhlber         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:42:06 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 static int	itermandelbrot(t_fractol *frct, t_calc_data *data);
 static int	color_mandel(t_fcol *c, int i);
 
+/**
+ * Sets up parameters and invokes the Mandelbrot fractal calculation.
+ * 
+ * @param frct Pointer to the fractol struct.
+ * @param argc Number of arguments.
+ * @param argv Array of argument strings.
+ */
 void	mandelbrot_p(t_fractol *frct, int argc, char **argv)
 {
 	(void)argv;
@@ -81,6 +88,13 @@ static int	itermandelbrot(t_fractol *frct, t_calc_data *data)
 	return (i);
 }
 
+/**
+ * Generates color for the Mandelbrot set based on the iteration count.
+ * 
+ * @param c Pointer to the struct holding color parameters.
+ * @param i Iteration count.
+ * @return Combined RGBA color value as an integer.
+ */
 static int	color_mandel(t_fcol *c, int i)
 {
 	double	theta;

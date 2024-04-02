@@ -6,7 +6,7 @@
 /*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 15:31:57 by julian            #+#    #+#             */
-/*   Updated: 2024/04/02 13:41:35 by jmuhlber         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:41:35 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 static int	iterburningship(t_fractol *frct, t_calc_data *data);
 static int	color_brnshp(t_fcol *c, int i);
 
+/**
+ * Sets up parameters and invokes the Burningship fractal calculation.
+ * 
+ * @param frct Pointer to the fractol struct.
+ * @param argc Number of arguments.
+ * @param argv Array of argument strings.
+ */
 void	burningship_p(t_fractol *frct, int argc, char **argv)
 {
 	frct->shift_x = 0.5;
@@ -81,6 +88,13 @@ static int	iterburningship(t_fractol *frct, t_calc_data *data)
 	return (i);
 }
 
+/**
+ * Generates color for the Burningship set based on the iteration count.
+ * 
+ * @param c Pointer to the struct holding color parameters.
+ * @param i Iteration count.
+ * @return Combined RGBA color value as an integer.
+ */
 static int	color_brnshp(t_fcol *c, int i)
 {
 	double	theta;

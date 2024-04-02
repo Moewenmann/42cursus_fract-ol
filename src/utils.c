@@ -6,7 +6,7 @@
 /*   By: jmuhlber <jmuhlber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 19:18:31 by jmuhlber          #+#    #+#             */
-/*   Updated: 2024/04/02 13:19:43 by jmuhlber         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:40:03 by jmuhlber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,30 @@ static double	ft_atof(const char *str);
 static int		ft_is_space(const char *str);
 static double	atof_parse_number(const char *str, double *f, int *d);
 
+/**
+ * Combines RGBA values into a single integer value.
+ * 
+ * @param red Red value from 0 to 255.
+ * @param green Green value from 0 to 255.
+ * @param blue Blue value from 0 to 255.
+ * @param alpha Alpha value from 0 to 255.
+ * @return Combined RGBA value as an integer.
+ */
 int	get_rgba(int red, int green, int blue, int alpha)
 {
 	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
 }
 
+/**
+ * Validates parameters for fractal calculation.
+ * Checks if the input parameters are valid and converts them
+ * to floating-point numbers.
+ * 
+ * @param frct Pointer to the fractol struct.
+ * @param argc Number of arguments.
+ * @param argv Array of argument strings.
+ * @return 1 if parameters are valid otherwise the function will exit.
+ */
 int	eval_params(t_fractol *frct, int argc, char **argv)
 {
 	int	i;
@@ -49,6 +68,12 @@ int	eval_params(t_fractol *frct, int argc, char **argv)
 	return (1);
 }
 
+/**
+ * Converts a string representation of a floating-point number to a double value.
+ * 
+ * @param str The input string representing a floating-point number.
+ * @return The double value represented by the input string.
+ */
 static double	ft_atof(const char *str)
 {
 	double	res;
