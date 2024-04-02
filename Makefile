@@ -6,7 +6,7 @@
 #    By: julian <julian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/15 17:43:53 by jmuhlber          #+#    #+#              #
-#    Updated: 2024/04/01 02:42:24 by julian           ###   ########.fr        #
+#    Updated: 2024/04/01 04:15:19 by julian           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,11 @@ fclean: clean
 		make -C $(LIBFTDIR) fclean; \
 	fi
 
+ffclean: fclean rmlib
+
 re: fclean all
+
+ref: re fclean relib all
 
 install:
 	@brew install glfw
